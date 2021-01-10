@@ -15,7 +15,6 @@ namespace TwseTradingExchangeForms.WebApi.DAO
         private class TwseApiResponseModelData
         {
             public string stat { get; set; }
-            public List<string> fields { get; set; }
             public List<List<string>> data { get; set; }
         }
 
@@ -61,18 +60,44 @@ namespace TwseTradingExchangeForms.WebApi.DAO
             {
                 foreach (var a in responseJson.data)
                 {
-                    string peRatioStr = a[4].ToString();
-                    double peRatio = peRatioStr == "-" ? -99 : double.Parse(peRatioStr);
+                    string sID;
+                    string sName;
+                    double yRate;
+                    int? yYear;
+                    string peRStr;
+                    double ptnRatio;
+                    string frySeason;
+                    if (a.Count == 7)
+                    {
+                        sID = a[0].ToString();
+                        sName = a[1].ToString();
+                        yRate = double.Parse(a[2].ToString());
+                        yYear = int.Parse(a[3].ToString());
+                        peRStr = a[4].ToString();
+                        ptnRatio = double.Parse(a[5].ToString());
+                        frySeason = a[6].ToString();
+                    }
+                    else
+                    {
+                        sID = a[0].ToString();
+                        sName = a[1].ToString();
+                        peRStr = a[2].ToString();
+                        yRate = double.Parse(a[3].ToString());
+                        yYear = null;
+                        ptnRatio = double.Parse(a[4].ToString());
+                        frySeason = "";
+                    }
+                    double? peRatio = peRStr == "-" ? new double?() : double.Parse(peRStr);
                     TwseTradingExchangeModelData d = new TwseTradingExchangeModelData()
                     {
-                        SecuritiesID = a[0].ToString(),
+                        SecuritiesID = sID,
                         Time = datetime,
-                        SecuritiesName = a[1].ToString(),
-                        YieldRate = double.Parse(a[2].ToString()),
-                        YieldYear = int.Parse(a[3].ToString()),
+                        SecuritiesName = sName,
+                        YieldRate = yRate,
+                        YieldYear = yYear,
                         PeRatio = peRatio,
-                        PriceToNetRatio = double.Parse(a[5].ToString()),
-                        FinantialReportYearSeason = a[6].ToString()
+                        PriceToNetRatio = ptnRatio,
+                        FinantialReportYearSeason = frySeason
                     };
                     data.Add(d);
                 }

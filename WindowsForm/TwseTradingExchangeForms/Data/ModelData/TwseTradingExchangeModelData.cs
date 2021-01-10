@@ -35,11 +35,11 @@ namespace TwseTradingExchangeForms.Data.ModelData
         /// <summary>
         /// 股利年度
         /// </summary>
-        public int YieldYear { get; set; }
+        public int? YieldYear { get; set; }
         /// <summary>
         /// 本益比
         /// </summary>
-        public double PeRatio { get; set; }
+        public double? PeRatio { get; set; }
         /// <summary>
         /// 股價淨值比
         /// </summary>
