@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TwseTradingExchangeForms.WebApi.ModelData;
+using TwseTradingExchangeForms.Data.ModelData;
 
 namespace TwseTradingExchangeForms.WebApi.DAO
 {    
@@ -12,9 +12,36 @@ namespace TwseTradingExchangeForms.WebApi.DAO
     {
         private WebApiCore _ApiCore = new WebApiCore();
 
-        public IEnumerable<TwseTradingExchangeApiModelData> GetTwseTradingExchange(DateTime datetime)
+        private class TwseApiResponseModelData
         {
-            List<TwseTradingExchangeApiModelData> data = new List<TwseTradingExchangeApiModelData>();
+            public string stat { get; set; }
+            public List<string> fields { get; set; }
+            public List<List<string>> data { get; set; }
+        }
+
+        //public IEnumerable<TwseTradingExchangeModelData> GetTwseTradingExchange(DateTime st, DateTime et)
+        //{
+        //    List<DateTime> dts = new List<DateTime>();
+        //    for (DateTime t = st; t <= et; t = t.AddDays(1))
+        //    {
+        //        dts.Add(t);
+        //    }
+        //    return GetTwseTradingExchange(dts);
+        //}
+
+        //public IEnumerable<TwseTradingExchangeModelData> GetTwseTradingExchange(List<DateTime> datetimes)
+        //{
+        //    List<TwseTradingExchangeModelData> data = new List<TwseTradingExchangeModelData>();
+        //    foreach (var dt in datetimes)
+        //    {
+        //        data.AddRange(GetTwseTradingExchange(dt));
+        //    }
+        //    return data;
+        //}
+
+        public IEnumerable<TwseTradingExchangeModelData> GetTwseTradingExchange(DateTime datetime)
+        {
+            List<TwseTradingExchangeModelData> data = new List<TwseTradingExchangeModelData>();
 
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("response", "json");
@@ -36,9 +63,10 @@ namespace TwseTradingExchangeForms.WebApi.DAO
                 {
                     string peRatioStr = a[4].ToString();
                     double peRatio = peRatioStr == "-" ? -99 : double.Parse(peRatioStr);
-                    TwseTradingExchangeApiModelData d = new TwseTradingExchangeApiModelData()
+                    TwseTradingExchangeModelData d = new TwseTradingExchangeModelData()
                     {
                         SecuritiesID = a[0].ToString(),
+                        Time = datetime,
                         SecuritiesName = a[1].ToString(),
                         YieldRate = double.Parse(a[2].ToString()),
                         YieldYear = int.Parse(a[3].ToString()),
@@ -52,21 +80,8 @@ namespace TwseTradingExchangeForms.WebApi.DAO
             return data;
         }
 
-        public IEnumerable<TwseTradingExchangeApiModelData> GetTwseTradingExchange(List<DateTime> datetimes)
-        {
-            List<TwseTradingExchangeApiModelData> data = new List<TwseTradingExchangeApiModelData>();
-            foreach (var dt in datetimes)
-            {
-                data.AddRange(GetTwseTradingExchange(dt));
-            }
-            return data;
-        }
+        
 
-        private class TwseApiResponseModelData
-        {
-            public string stat { get; set; }
-            public List<List<string>> data { get; set; }
-        }
-
+        
     }
 }

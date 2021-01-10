@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwseTradingExchangeForms", "WindowsForms\TwseTradingExchangeForms.csproj", "{4180BD08-2B04-433A-B5F0-50002B3EEF7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwseTradingExchangeForms", "TwseTradingExchangeForms\TwseTradingExchangeForms.csproj", "{4180BD08-2B04-433A-B5F0-50002B3EEF7A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTestProject\UnitTest.csproj", "{C45A375A-803F-437C-8C3B-DD2005490F8A}"
 EndProject

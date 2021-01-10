@@ -4,14 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwseTradingExchangeForms.WebApi.ModelData
+namespace TwseTradingExchangeForms.Data.ModelData
 {
-    public class TwseTradingExchangeApiModelData
+    public class TwseTradingExchangeModelData
     {
         /// <summary>
         /// 證券代號
         /// </summary>
         public string SecuritiesID { get; set; }
+        /// <summary>
+        /// 資料的時間(紀錄至天)
+        /// </summary>
+        public DateTime Time
+        {
+            get { return _Time; }
+            set { _Time = new DateTime(value.Year, value.Month, value.Day); }
+        }
+        private DateTime _Time;
+
+        
+
         /// <summary>
         /// 證券名稱
         /// </summary>
