@@ -57,11 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DAO\TwseTradingExchangeDAO.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Ext\ExtDateTime.cs" />
+    <Compile Include="TwseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="TwseForm.Designer.cs">
+      <DependentUpon>TwseForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Functions\TwseTradingExchangeFunc.cs" />
     <Compile Include="Program.cs" />
@@ -80,6 +81,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TwseForm.resx">
+      <DependentUpon>TwseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Files\SavedData\data.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -96,8 +103,6 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Files\SavedData\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

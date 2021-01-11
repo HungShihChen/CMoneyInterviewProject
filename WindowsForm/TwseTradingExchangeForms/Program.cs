@@ -15,12 +15,9 @@ namespace TwseTradingExchangeForms
         [STAThread]
         static void Main()
         {
-            TwseTradingExchangeFunc func = new TwseTradingExchangeFunc();
-            func.UpdateData(new DateTime(2020, 1, 1), new DateTime(2020, 1, 10));
-            func.SaveData();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new TwseForm());
         }
     }
 }
