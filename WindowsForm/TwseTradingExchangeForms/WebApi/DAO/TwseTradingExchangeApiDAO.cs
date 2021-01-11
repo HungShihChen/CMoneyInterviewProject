@@ -56,6 +56,10 @@ namespace TwseTradingExchangeForms.WebApi.DAO
             }
 
             var responseJson = JsonConvert.DeserializeObject<TwseApiResponseModelData>(response);
+            if(responseJson.stat == "很抱歉，沒有符合條件的資料!")
+            {
+                data.Add(new TwseTradingExchangeModelData() { Time = datetime });
+            }
             if(responseJson.stat == "OK")
             {
                 foreach (var a in responseJson.data)
@@ -65,7 +69,7 @@ namespace TwseTradingExchangeForms.WebApi.DAO
                     double yRate;
                     int? yYear;
                     string peRStr;
-                    double ptnRatio;
+                    string ptnRStr;
                     string frySeason;
                     if (a.Count == 7)
                     {
@@ -74,7 +78,7 @@ namespace TwseTradingExchangeForms.WebApi.DAO
                         yRate = double.Parse(a[2].ToString());
                         yYear = int.Parse(a[3].ToString());
                         peRStr = a[4].ToString();
-                        ptnRatio = double.Parse(a[5].ToString());
+                        ptnRStr = a[5].ToString();
                         frySeason = a[6].ToString();
                     }
                     else
@@ -84,10 +88,11 @@ namespace TwseTradingExchangeForms.WebApi.DAO
                         peRStr = a[2].ToString();
                         yRate = double.Parse(a[3].ToString());
                         yYear = null;
-                        ptnRatio = double.Parse(a[4].ToString());
+                        ptnRStr = a[4].ToString();
                         frySeason = "";
                     }
                     double? peRatio = peRStr == "-" ? new double?() : double.Parse(peRStr);
+                    double? ptnRatio = ptnRStr == "-" ? new double?() : double.Parse(ptnRStr);
                     TwseTradingExchangeModelData d = new TwseTradingExchangeModelData()
                     {
                         SecuritiesID = sID,
