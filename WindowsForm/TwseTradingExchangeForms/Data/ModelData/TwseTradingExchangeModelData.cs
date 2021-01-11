@@ -43,7 +43,7 @@ namespace TwseTradingExchangeForms.Data.ModelData
         /// <summary>
         /// 股價淨值比
         /// </summary>
-        public double PriceToNetRatio { get; set; }
+        public double? PriceToNetRatio { get; set; }
         /// <summary>
         /// 財報年/季
         /// </summary>
