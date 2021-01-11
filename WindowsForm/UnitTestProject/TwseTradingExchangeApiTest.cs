@@ -22,7 +22,7 @@ namespace UnitTestProject
             TwseTradingExchangeApiDAO dao = new TwseTradingExchangeApiDAO();
             DateTime dt = new DateTime(2020, 1, 1);
             var data = dao.GetTwseTradingExchange(dt).ToList();
-            Assert.AreEqual(0, data.Count());
+            Assert.AreEqual(1, data.Count());
         }
     }
 }

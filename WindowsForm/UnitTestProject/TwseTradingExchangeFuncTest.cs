@@ -7,44 +7,38 @@ namespace UnitTestProject
     [TestClass]
     public class TwseTradingExchangeFuncTest
     {
+        private static TwseTradingExchangeFunc func = new TwseTradingExchangeFunc();
         [TestMethod]
         public void TestGetRecentDayHasData()
         {
-            TwseTradingExchangeFunc func = new TwseTradingExchangeFunc();
-            var data = func.GetRecentDayData("1102", new DateTime(2020, 1, 8), new DateTime(2020, 1, 10));
+            var data = func.GetData("1102", new DateTime(2021, 1, 6), new DateTime(2021, 1, 8));
             Assert.AreEqual(3, data.Count);
-            Assert.AreEqual(10.69, data[0].PeRatio);
-            //func.DeleteData();
+            Assert.AreEqual(10.18, data[0].PeRatio);
         }
 
         [TestMethod]
         public void TestGetRecentDayNoData()
         {
-            TwseTradingExchangeFunc func = new TwseTradingExchangeFunc();
-            var data = func.GetRecentDayData("1102", new DateTime(2020, 1, 4), new DateTime(2020, 1, 5));
+            var data = func.GetData("1102", new DateTime(2021, 1, 2), new DateTime(2021, 1, 3));
             Assert.AreEqual(0, data.Count);
-            //func.DeleteData();
         }
 
         [TestMethod]
         public void TestGetPeRatioTopN()
         {
-            TwseTradingExchangeFunc func = new TwseTradingExchangeFunc();
-            var data = func.GetPeRatioTopN(new DateTime(2020, 1, 8), 3);
+            var data = func.GetPeRatioTopN(new DateTime(2021, 1, 8), 3);
             Assert.AreEqual(3, data.Count);
-            Assert.AreEqual(2005.00, data[0].PeRatio);
-            Assert.AreEqual(1013.33, data[1].PeRatio);
-            Assert.AreEqual(865.00, data[2].PeRatio);
-            //func.DeleteData();
+            Assert.AreEqual(5100, data[0].PeRatio);
+            Assert.AreEqual(1970, data[1].PeRatio);
+            Assert.AreEqual(1230.00, data[2].PeRatio);
         }
 
         [TestMethod]
         public void TestGetYieldRateMaxIncreasingTimeRange()
         {
-            TwseTradingExchangeFunc func = new TwseTradingExchangeFunc();
-            var data = func.GetYieldRateMaxIncreasingTimeRange("1102", new DateTime(2020, 1, 7), new DateTime(2020, 1, 10));
+            var data = func.GetYieldRateMaxIncreasingTimeRange("1102", new DateTime(2021, 1, 1), new DateTime(2021, 1, 10));
             Assert.AreEqual(2, data.Count);
-            Assert.AreEqual(9, data[0].Time.Day);
+            Assert.AreEqual(6, data[0].Time.Day);
         }
     }
 }
