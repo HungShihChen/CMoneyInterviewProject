@@ -20,14 +20,15 @@ namespace TwseTradingExchangeForms.Functions
         }
 
         /// <summary>
-        /// 依照證券代號 搜尋最近n天的資料
+        /// 依照證券代號 取得指定期間的資料
         /// </summary>
         /// <param name="securitisID"></param>
-        /// <param name="day"></param>
+        /// <param name="st"></param>
+        /// <param name="et"></param>
         /// <returns></returns>
-        public List<TwseTradingExchangeModelData> GetRecentDayData(string securitisID, DateTime st, DateTime et)
+        public List<TwseTradingExchangeModelData> GetData(string securitisID, DateTime st, DateTime et)
         {
-            return GetData(st, et).Where(x => x.SecuritiesID == securitisID).ToList();
+            return GetData(st, et).Where(x => x.SecuritiesID == securitisID).OrderByDescending(x => x.Time).ToList();
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace TwseTradingExchangeForms.Functions
         /// <returns></returns>
         public List<TwseTradingExchangeModelData> GetYieldRateMaxIncreasingTimeRange(string securitisID, DateTime st, DateTime et)
         {
-            var data = GetRecentDayData(securitisID, st, et).OrderBy(x => x.Time).ToList();
+            var data = GetData(securitisID, st, et).OrderBy(x => x.Time).ToList();
             int[] dp = new int[data.Count + 1];
             dp[0] = 1;
             for (int i = 1; i < data.Count(); i++)
@@ -75,7 +76,7 @@ namespace TwseTradingExchangeForms.Functions
             for (int y = st.Year; y <= et.Year; y++)
             {
                 if(_YearDataDic.ContainsKey(y))
-                    data.AddRange(_YearDataDic[y].Where(x => x.Time >= st && x.Time <= et));
+                    data.AddRange(_YearDataDic[y].Where(x => x.SecuritiesID != null && x.Time >= st && x.Time <= et ));
             }
             return data;
         }
