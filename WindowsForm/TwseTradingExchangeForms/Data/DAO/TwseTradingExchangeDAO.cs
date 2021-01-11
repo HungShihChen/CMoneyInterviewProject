@@ -23,6 +23,11 @@ namespace TwseTradingExchangeForms.Data.DAO
             {
                 Directory.CreateDirectory(dataRootDir);
             }
+            foreach (var filePath in Directory.GetFiles(dataRootDir))
+            {
+                if (filePath != zipFile)
+                    File.Delete(filePath);
+            }
             if (File.Exists(zipFile))
             {
                 var za = ZipFile.OpenRead(zipFile);
