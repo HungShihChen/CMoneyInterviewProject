@@ -10,25 +10,20 @@ namespace TwseTradingExchangeForms.Functions
 {
     public class TwseTradingExchangeFunc
     {
-        private static TwseTradingExchangeDAO dao;
-        private static Dictionary<int, List<TwseTradingExchangeModelData>> _YearDataDic;
+        private static TwseTradingExchangeDAO dao = new TwseTradingExchangeDAO();
 
-        public TwseTradingExchangeFunc()
+        public List<TwseTradingExchangeModelData> GetRecentDay(string securitisID, DateTime time, int day)
         {
-            dao = new TwseTradingExchangeDAO();
-            _YearDataDic = dao.InitData();
-        }
-
-        /// <summary>
-        /// 依照證券代號 取得指定期間的資料
-        /// </summary>
-        /// <param name="securitisID"></param>
-        /// <param name="st"></param>
-        /// <param name="et"></param>
-        /// <returns></returns>
-        public List<TwseTradingExchangeModelData> GetData(string securitisID, DateTime st, DateTime et)
-        {
-            return GetData(st, et).Where(x => x.SecuritiesID == securitisID).OrderByDescending(x => x.Time).ToList();
+            var data = new List<TwseTradingExchangeModelData>();
+            for (int i = 0; data.Count < day; i++)
+            {
+                var dt = time.AddDays(-i);
+                dao.UpdateData(dt, dt);
+                var d = dao.GetData(securitisID, dt, dt);
+                if (d.Count > 0)
+                    data.AddRange(d);
+            }
+            return data.OrderByDescending(x => x.Time).ToList();
         }
 
         /// <summary>
@@ -39,7 +34,8 @@ namespace TwseTradingExchangeForms.Functions
         /// <returns></returns>
         public List<TwseTradingExchangeModelData> GetPeRatioTopN(DateTime time, int n)
         {
-            var data = GetData(time, time);
+            dao.UpdateData(time, time);
+            var data = dao.GetData(time, time);
             return data.OrderByDescending(x => x.PeRatio).Take(n).ToList();
         }
 
@@ -52,7 +48,8 @@ namespace TwseTradingExchangeForms.Functions
         /// <returns></returns>
         public List<TwseTradingExchangeModelData> GetYieldRateMaxIncreasingTimeRange(string securitisID, DateTime st, DateTime et)
         {
-            var data = GetData(securitisID, st, et).OrderBy(x => x.Time).ToList();
+            dao.UpdateData(st, et);
+            var data = dao.GetData(securitisID, st, et).OrderBy(x => x.Time).ToList();
             int[] dp = new int[data.Count + 1];
             dp[0] = 1;
             for (int i = 1; i < data.Count(); i++)
@@ -70,25 +67,16 @@ namespace TwseTradingExchangeForms.Functions
         }
 
 
-        public List<TwseTradingExchangeModelData> GetData(DateTime st, DateTime et)
-        {
-            List<TwseTradingExchangeModelData> data = new List<TwseTradingExchangeModelData>();
-            for (int y = st.Year; y <= et.Year; y++)
-            {
-                if(_YearDataDic.ContainsKey(y))
-                    data.AddRange(_YearDataDic[y].Where(x => x.SecuritiesID != null && x.Time >= st && x.Time <= et ));
-            }
-            return data;
-        }
+        
 
         public void UpdateData(DateTime st, DateTime et)
         {
-            dao.UpdateData(_YearDataDic, st, et);
+            dao.UpdateData(st, et);
         }
 
         public void SaveData()
         {
-            dao.SaveData(_YearDataDic);
+            dao.SaveData();
         }
 
         public void DeleteData()

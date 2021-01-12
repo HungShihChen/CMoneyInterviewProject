@@ -28,19 +28,13 @@ namespace TwseTradingExchangeForms
         {
             string id = TbRecentDaySID.Text;
             int day = Convert.ToInt32(NudRecentDay.Value);
-            DateTime et = DateTime.Now.ConvertToYmd();
-            DateTime st = et.AddDays(-Convert.ToInt32(NudRecentDay.Maximum) * 2);
-
-            func.UpdateData(st, et);
-            var data = func.GetData(id, st, et);
-            DgvRecentDay.DataSource = data.Take(day).ToList();
+            DgvRecentDay.DataSource = func.GetRecentDay(id, DateTime.Now.ConvertToYmd(), day);
         }
 
         private void BtnSearchPeRatioTopN_Click(object sender, EventArgs e)
         {
             DateTime dt = DtpPeRatioTopN.Value.ConvertToYmd();
             int n = Convert.ToInt32(NudPeRatioTopN.Value);
-            func.UpdateData(dt, dt);
             DgvPeRatioTopN.DataSource = func.GetPeRatioTopN(dt, n);
         }
 
@@ -49,7 +43,6 @@ namespace TwseTradingExchangeForms
             string id = TbYieldRateInc.Text;
             DateTime st = DtpYieldRateIncSt.Value.ConvertToYmd();
             DateTime et = DtpYieldRateIncEt.Value.ConvertToYmd();
-            func.UpdateData(st, et);
             var data = func.GetYieldRateMaxIncreasingTimeRange(id, st, et);
             LblYieldRateInc.Text = "最長天數: " + data.Count;
             DgvYieldRateInc.DataSource = data;

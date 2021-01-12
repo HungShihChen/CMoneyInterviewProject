@@ -14,10 +14,16 @@ namespace TwseTradingExchangeForms.Data.DAO
 {
     public class TwseTradingExchangeDAO
     {
+        private static Dictionary<int, List<TwseTradingExchangeModelData>> _YearDataDic;
+
         private static string dataRootDir = "Files/SavedData/";
         private static string zipFile = dataRootDir + "data.zip";
+        public TwseTradingExchangeDAO()
+        {
+            InitData();
+        }
 
-        public Dictionary<int, List<TwseTradingExchangeModelData>> InitData()
+        public void InitData()
         {
             if(!Directory.Exists(dataRootDir))
             {
@@ -47,19 +53,34 @@ namespace TwseTradingExchangeForms.Data.DAO
                 data.Add(year, InitData(filePath));
             }
 
-            return data;
+            _YearDataDic = data;
         }
 
-        public List<TwseTradingExchangeModelData> InitData(string filePath)
+        private List<TwseTradingExchangeModelData> InitData(string filePath)
         {
             var content = File.ReadAllText(filePath);
             var d = JsonConvert.DeserializeObject<List<TwseTradingExchangeModelData>>(content);
             return d;
         }
-
-
-        public void SaveData(Dictionary<int, List<TwseTradingExchangeModelData>> data)
+        public List<TwseTradingExchangeModelData> GetData(string securitisID, DateTime st, DateTime et)
         {
+            return GetData(st, et).Where(x => x.SecuritiesID == securitisID).OrderByDescending(x => x.Time).ToList();
+        }
+
+        public List<TwseTradingExchangeModelData> GetData(DateTime st, DateTime et)
+        {
+            List<TwseTradingExchangeModelData> data = new List<TwseTradingExchangeModelData>();
+            for (int y = st.Year; y <= et.Year; y++)
+            {
+                if (_YearDataDic.ContainsKey(y))
+                    data.AddRange(_YearDataDic[y].Where(x => x.SecuritiesID != null && x.Time >= st && x.Time <= et));
+            }
+            return data;
+        }
+
+        public void SaveData()
+        {
+            var data = _YearDataDic;
             string tempDir = dataRootDir + "temp/";
             Directory.CreateDirectory(tempDir);
             foreach (var d in data)
@@ -73,8 +94,9 @@ namespace TwseTradingExchangeForms.Data.DAO
             Directory.Delete(tempDir);
         }
 
-        public void UpdateData(Dictionary<int, List<TwseTradingExchangeModelData>> data, DateTime st, DateTime et)
+        public void UpdateData(DateTime st, DateTime et)
         {
+            var data = _YearDataDic;
             TwseTradingExchangeApiDAO apiDao = new TwseTradingExchangeApiDAO();
             for (DateTime t = st; t <= et; t = t.AddDays(1))
             {
