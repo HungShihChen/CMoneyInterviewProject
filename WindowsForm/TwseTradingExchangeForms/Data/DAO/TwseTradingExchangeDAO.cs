@@ -107,7 +107,7 @@ namespace TwseTradingExchangeForms.Data.DAO
                 if(d.Count(x => x.Time == t) == 0)
                 {
                     d.AddRange(apiDao.GetTwseTradingExchange(t));
-                    Thread.Sleep(50);
+                    Thread.Sleep(2500);
                 }
             }
         }
