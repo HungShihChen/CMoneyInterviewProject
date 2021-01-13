@@ -50,6 +50,8 @@ namespace TwseTradingExchangeForms.Functions
         {
             dao.UpdateData(st, et);
             var data = dao.GetData(securitisID, st, et).OrderBy(x => x.Time).ToList();
+            if (data.Count == 0)
+                return data;
             int[] dp = new int[data.Count + 1];
             dp[0] = 1;
             for (int i = 1; i < data.Count(); i++)
