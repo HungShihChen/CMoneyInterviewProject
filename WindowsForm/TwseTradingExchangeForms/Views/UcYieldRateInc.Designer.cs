@@ -108,6 +108,7 @@
             // DtpStartTime
             // 
             this.DtpStartTime.Location = new System.Drawing.Point(233, 3);
+            this.DtpStartTime.MinDate = new System.DateTime(2015, 1, 1, 0, 0, 0, 0);
             this.DtpStartTime.Name = "DtpStartTime";
             this.DtpStartTime.Size = new System.Drawing.Size(135, 23);
             this.DtpStartTime.TabIndex = 11;
@@ -126,6 +127,7 @@
             // DtpEndTime
             // 
             this.DtpEndTime.Location = new System.Drawing.Point(436, 3);
+            this.DtpEndTime.MinDate = new System.DateTime(2015, 1, 1, 0, 0, 0, 0);
             this.DtpEndTime.Name = "DtpEndTime";
             this.DtpEndTime.Size = new System.Drawing.Size(135, 23);
             this.DtpEndTime.TabIndex = 14;

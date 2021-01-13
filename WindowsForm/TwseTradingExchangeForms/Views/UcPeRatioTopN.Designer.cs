@@ -42,14 +42,14 @@
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // DgvPeRatioTopN
+            // Dgv
             // 
             this.Dgv.AllowUserToAddRows = false;
             this.Dgv.AllowUserToDeleteRows = false;
             this.Dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Dgv.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Dgv.Location = new System.Drawing.Point(3, 38);
-            this.Dgv.Name = "DgvPeRatioTopN";
+            this.Dgv.Name = "Dgv";
             this.Dgv.ReadOnly = true;
             this.Dgv.RowTemplate.Height = 24;
             this.Dgv.Size = new System.Drawing.Size(916, 544);
@@ -82,6 +82,7 @@
             // Dtp
             // 
             this.Dtp.Location = new System.Drawing.Point(41, 3);
+            this.Dtp.MinDate = new System.DateTime(2015, 1, 1, 0, 0, 0, 0);
             this.Dtp.Name = "Dtp";
             this.Dtp.Size = new System.Drawing.Size(135, 23);
             this.Dtp.TabIndex = 5;
