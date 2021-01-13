@@ -15,9 +15,10 @@ namespace TwseTradingExchangeForms
         [STAThread]
         static void Main()
         {
+            TwseTradingExchangeFunc func = new TwseTradingExchangeFunc();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TwseForm());
+            Application.Run(new MainForm());
         }
     }
 }
