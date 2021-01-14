@@ -1,30 +1,12 @@
-# CMoneyInterviewProject
-Take Home Engineering Challenge
+Hello!
 
-# The Problem
-
-- CMoney的產品與服務大量涉及了對證券的蒐集、處理、展示
-- 您的任務是利用 台灣證券交易所 提供的 個股日本益比、殖利率及股價淨值比 實作
+本專案利用 台灣證券交易所 提供的 個股日本益比、殖利率及股價淨值比(https://www.twse.com.tw/zh/page/trading/exchange/BWIBBU_d.html)
+實作下列功能：
 
 1. 依照證券代號 搜尋最近n天的資料
 2. 指定特定日期 顯示當天本益比前n名
 3. 指定日期範圍、證券代號 顯示這段時間內殖利率 為嚴格遞增的最長天數並顯示開始、結束日期
 
-- 如何展示上述需求沒有任何限制
+執行平台：Windows
+執行方式：下載專案後，至WindowsForm\TwseTradingExchangeForms\bin\Debug，開啟TwseTradingExchangeForms.exe即可
 
-如果您擅長後端可以設計一套web API 回傳結果
-如果您習慣使用Pipeline工作可以實作一個CLI Tool
-如果您除了會Coding還對資料視覺化有心得可以實作web frontend展示結果
-其他您覺得自己擅長的方式
-
-- 其他要求
-
-資料必須允許在線新增
-相信您也發現了證交所提供的檔案為每日一個獨立的csv檔
-實際分析資料時會用到不止一天
-請考慮如何匯入資料
-必須使用git開發
-必須有文件
-必須有單元測試
-
-# 架構
